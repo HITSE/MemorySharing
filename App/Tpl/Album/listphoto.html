@@ -2,10 +2,17 @@
 
 <include file="Public:head" />
 <load href="../Public/Css/Page.css"/>
+<load href="../Public/Images/css_pirobox/style/style.css"/>
 <load href="../Public/Js/jquery.akeditable.js"/>
 <load href="../Public/Js/uploadify/uploadify.css"/>
 <load href="../Public/Js/uploadify/swfobject.js"/>
 <load href="../Public/Js/uploadify/jquery.uploadify.v2.1.4.min.js"/>
+
+<load href="../Public/Js/jquery.pirobox.js"/>
+
+<load href="../Public/Js/ui/jquery.ui.core.js"/>
+<load href="../Public/Js/ui/jquery.ui.widget.js"/>
+<load href="../Public/Js/ui/jquery.ui.mouse.js"/>
  
  <!--
 <script>
@@ -41,6 +48,21 @@ $(".loadImage").zxxbox({
 });
 </script>
 -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$().piroBox({
+			my_speed: 400, //animation speed
+			bg_alpha: 0.3, //background opacity
+			slideShow : true, // true == slideshow on, false == slideshow off
+			slideSpeed : 4, //slideshow duration in seconds(3 to 6 Recommended)
+			close_all : '.piro_close,.piro_overlay',// add class .piro_overlay(with comma)if you want overlay click close piroBox
+			count_hit:true,
+			count_hit_url:'{:U('Index/counthit')}'
+
+	});
+});
+</script>
 
 <div id="content_box">
 <h3><input type="button" name="submit" value="返回相册列表" class="formbtn" onclick="javascript:window.location='{:U('Album/index')}'" /><input type="button" name="submit" value="当前相册图片排序" class="formbtn" onclick="javascript:window.location='{:U('Album/sortimg',array('id'=>$albumarr['id']))}'" />相册>>{$albumarr.album_name}图片管理
@@ -81,7 +103,8 @@ $(".loadImage").zxxbox({
 <ul class="thumb">
 <volist name="albumlist" id="vo">
 <li id="list{$vo.id}"><eq name="vo['iscover']" value="1" ><div class="covertitle"></div></eq>
-  <a class="loadImage" href=" __PUBLIC__/Uploads/Albums/b_{$vo.pickey}"><img src="__PUBLIC__/Uploads/Albums/b_{$vo.pickey}" alt="{$vo.name}" />
+ <a href="__PUBLIC__/Uploads/Albums/b_{$vo.pickey}" class="pirobox_gall" id="{$vo.id}" title="{$vo.name}">
+<img src="__PUBLIC__/Uploads/Albums/s_{$vo.pickey}" alt="{$vo.name}" />
 </a>
 <p>名称:<span id="clname{$vo.id}">{$vo.name}</span><BR />点击:{$vo.hits}<BR /><a href="javascript:;" onclick="akedit('{:U('Album/editpname',array('id'=>$vo['id'],'oldname'=>$vo['name']))}','clname{$vo.id}',{
 		        type : 'text',
